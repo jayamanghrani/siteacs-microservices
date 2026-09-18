@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: SiteAcsBadgeBackendApp
+  devtools:
+    restart:
+      enabled: true
+  # database configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/siteacs
+    username: root
+    password: Linus$$30MySQL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+file.upload-dir: C:\\Users\\jayam\\IdeaProjects\\siteacs-parent\\siteacs-backend\\src\\main\\java\\com\\jm\\uploads
