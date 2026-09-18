@@ -1,0 +1,37 @@
+name: CI Build and Test
+on:
+  push:
+    branches: [ main, "v*" ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  CI-build-Test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: print msg
+        run: echo "CI Build and Test job triggered."
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: List files of code
+        run: ls -la
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'oracle'
+          cache: maven          # Maven dependencies cache ho jaayengi, faster build
+
+      - name: maven version
+        run: mvn -version
+
+      - name: clean and Package (build JAR)
+        run: mvn clean package
+
+      - name: List built JARs
+        run: find . -name "*.jar" -path "*/target/*"
+
