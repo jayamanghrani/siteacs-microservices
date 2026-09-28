@@ -4,8 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
+@EnableAsync
 @EntityScan(basePackages = "com.jm.common.entity")  // b/c ye dusre module me h,manually batana padega is package ko bhi scan karo."
 @EnableJpaRepositories(basePackages = "com.jm.common.repository") // b/c ye dusre package me h
 public class SiteAcsBackendApplication {

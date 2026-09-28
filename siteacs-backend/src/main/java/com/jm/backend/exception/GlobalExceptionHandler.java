@@ -3,6 +3,8 @@ package com.jm.backend.exception;
 import com.jm.backend.dto.APIResponseDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,6 +18,8 @@ type dhundhkar automatically correct handler method call kar deta hai.*/
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<APIResponseDTO> handleInvalidCredentials(InvalidCredentialsException ex) {
@@ -58,8 +62,10 @@ public class GlobalExceptionHandler {
     // Sabसे aakhri mein - koi aur/anexpected exception ho to bhi crash na ho, generic response de
     @ExceptionHandler(Exception.class)
     public ResponseEntity<APIResponseDTO> handleGenericException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new APIResponseDTO(false, "Something went wrong. Please try again later."));
+        ex.printStackTrace();   // TEMPORARILY add karo, poora stack-trace CONSOLE mein aa jaega
+        LOG.error("Unexpected error: ", ex);
+        return ResponseEntity.status(500).body(new APIResponseDTO(false, "Something went wrong"));
     }
-
 }
+
+

@@ -18,7 +18,8 @@
     </properties>
 
     <dependencies>
-        <!-- 1. The generic spring-boot-starter alone won't include web capabilities.-->
+        <!-- 1. The generic spring-boot-starter alone won't include web capabilities.
+        started include many things , 1of them is SLF4J + Logback, SpringBoot annotation-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -78,6 +79,16 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!--Multi-module mein, "SMTP-connection-setup" jaisा common-boilerplate, thoda duplicate hona NORMAL hai, kyunki har module ka apna context hai, aur har module ko apne aap mein independent hona chahiye. Agar aap common SMTP setup ko ek hi jagah par rakhte hain, to agar kisi module mein change karna ho, to baaki modules par bhi effect padega, jo ki unwanted ho sakta hai. Isliye har module mein apna SMTP setup rakhna better practice hai.
+        Agar future mein bahут-zyada duplication feel ho (jaisе 5-6 modules mein same email-boilerplate), tabhी ek "common-email-utility" banaने ki soчना chahiए — abhi, 2 modules ke liए, ye thoda extra "boilerplate" acceptable hai.-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
     </dependencies>
 
 
