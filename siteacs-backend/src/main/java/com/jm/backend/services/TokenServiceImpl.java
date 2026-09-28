@@ -9,10 +9,14 @@ import com.jm.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
+
+    private static final Logger log = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     private final JwtUtil jwtUtil;
     private final OnboardingApiClientRepo apiClientRepository;
@@ -21,6 +25,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String getToken(String clientId,String clientSecret) {
 
+        log.info("checking... is provided clientId is there in db ");
         OnboardingApiClient client = apiClientRepository
                 .findByClientId(clientId)
                 .orElseThrow(() -> new InvalidCredentialsException("Invalid client ID or secret"));

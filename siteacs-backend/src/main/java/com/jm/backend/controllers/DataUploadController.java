@@ -3,6 +3,7 @@ package com.jm.backend.controllers;
 import com.jm.backend.dto.APIResponseDTO;
 import com.jm.backend.serviceInterfaces.StorageService;
 import com.jm.backend.serviceInterfaces.TokenService;
+import com.jm.backend.util.FileValidationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class DataUploadController {
     private final StorageService storageService;
 
     // we have already added @RequiredARgsConstructor so no need of below constructor, it will be generated automatically by lombok
-//    @Autowired
+//    @Autowired--Single constructor → @Autowired optional / not needed.
     //Easy to test because you can directly pass a mock in the constructor.
 //    public DataUploadController(TokenService tokenservice,
 //                                StorageService storageService) {
@@ -28,23 +29,30 @@ public class DataUploadController {
 //        this.storageService= storageService;
 //    }
 
-    @PostMapping(value ="/token")
+    @PostMapping(value = "/token")
     public ResponseEntity<APIResponseDTO> getJwtToken(@RequestHeader("USER_ID") String userId,
-      @RequestHeader("USER_SECRET") String userSecret)
-    {
-        String token= tokenservice.getToken(userId,userSecret);
-        return ResponseEntity.status(HttpStatus.OK).body(new APIResponseDTO(true,token));
+                                                      @RequestHeader("USER_SECRET") String userSecret) {
+        String token = tokenservice.getToken(userId, userSecret);
+        return ResponseEntity.status(HttpStatus.OK).body(new APIResponseDTO(true, token));
     }
 
 
     // ab har api me token dena hoga , but hr api me token ko validate karne ka code likhna hoga,
     // isliye hum ek filter banaenge jo har request me token validate karega, aur agar valid h to hi request aage jaayegi, warna error response dega.
     @PostMapping(value = "/upload-contractor-file")
-    public ResponseEntity<APIResponseDTO> uploadFileToBox()
-    {
-        System.out.println("Received req: ");
-        //storageService.uploadFile(file);
-return ResponseEntity.ok(new APIResponseDTO(true,"req received successfully"));
-    }
+    public ResponseEntity<APIResponseDTO> uploadFileToBox(@RequestPart("file") MultipartFile file) {
+        if (!FileValidationUtil.isNotEmpty(file)) {
+            return ResponseEntity.badRequest().body(new APIResponseDTO(false, "File is empty"));
+        }
+        if (!FileValidationUtil.isValidExcel(file)) {
+            return ResponseEntity.badRequest().body(new APIResponseDTO(false, "Only .xlsx files allowed"));
+        }
+        if (!FileValidationUtil.isWithinSizeLimit(file)) {
+            return ResponseEntity.badRequest().body(new APIResponseDTO(false, "File too large"));
+        }
 
+        storageService.uploadFile(file);
+        return ResponseEntity.ok(new APIResponseDTO(true, "File uploaded successfully"));
+
+    }
 }

@@ -22,10 +22,10 @@ public class SecurityConfig {
     {
         httpreq.authorizeHttpRequests(auth->
         auth.
-           requestMatchers("/api/onboarding/token").permitAll()
+           requestMatchers("/api/onboarding/token","/api/auth/**").permitAll()
            .requestMatchers("/api/onboarding/upload-contractor-file").hasAuthority("ONBOARDING")
-             .anyRequest().authenticated()
-            );
+            .anyRequest().authenticated()
+        );
             httpreq.formLogin(form-> form.disable());
             httpreq.csrf(csrf-> csrf.disable());
             httpreq.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));//Ye line Spring Security ko bolती hai: "Apना default, automatic session-creation wala behavior band kar do — mujhe pata hai main khud (JWT se) sambhal loonga, tumको session banाने ki zaroorat nahi hai."Sirf aapका JWT hi authentication ka source hoगа, koई dusra parallel mechanism nahi chalега.

@@ -5,6 +5,16 @@ public class A3_Json {
 }
 
 /*
+
+| Client kya bhej raha hai?  | Use              |
+| -------------------------- | ---------------- |
+| `/users/123` → `123`       | `@PathVariable`  |
+| `/users?id=123` → `id`     | `@RequestParam`  |
+| JSON `{ "name": "Jaya" }`  | `@RequestBody`   |
+| File / PDF / Excel / image | `@RequestPart`   |
+| Header me `clientId`       | `@RequestHeader` |
+
+
  * ============================================================
  * JSON (JavaScript Object Notation)
  * ============================================================

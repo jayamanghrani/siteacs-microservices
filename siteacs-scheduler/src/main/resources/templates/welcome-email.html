@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body style="font-family: Arial, sans-serif; color: #333;">
+
+<h2>Welcome to SiteACS, <span th:text="${firstName}">Name</span>!</h2>
+
+<p>You have been onboarded as a contractor. Please follow the steps below to complete your badge request:</p>
+
+<h3>Steps to Follow:</h3>
+<ol>
+    <li>Login to the portal using your registered email: <b th:text="${email}">email</b></li>
+    <li>Verify the OTP sent to your email.</li>
+    <li>Confirm your name is correct.</li>
+    <li>Upload your photo as per the specifications below.</li>
+</ol>
+
+<h3>Photo Specifications:</h3>
+<ul>
+    <li>Plain white/light background</li>
+    <li>Face clearly visible, no sunglasses or caps</li>
+    <li>Recent photo (not older than 6 months)</li>
+    <li>File format: JPG or PNG</li>
+    <li>Maximum file size: 2MB</li>
+</ul>
+
+<p>Once submitted, your request will be sent to your manager for approval.</p>
+
+<p style="margin-top: 30px;">Regards,<br/>SiteACS Team</p>
+
+</body>
+</html>

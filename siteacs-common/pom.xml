@@ -32,7 +32,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--3.adding db dependency-@Entity, @Repository, JpaRepository jaise annotations/classes isी dependency se aatे hain.jaise annotations/classes issi dependency se aate hain.-->
+        <!--3.adding db dependency-@EntityScan
+        @Entity, @Repository, JpaRepository jaise annotations/classes is dependency se aatे hain.jaise annotations/classes issi dependency se aate hain.-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
